@@ -8,7 +8,6 @@ from models import BaseModel
 from timm.layers import use_fused_attn
 from timm.models.vision_transformer import Mlp
 
-device = getattr(opt, "device", torch.device("cpu"))
 
 def enc_dec_mask(T, S, frame_width = 1, expansion = 2):
 	mask = torch.ones(T, S)

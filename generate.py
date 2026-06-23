@@ -80,7 +80,7 @@ class InferenceAgent:
 
         self.opt = opt
         self.rank = DEVICE   # ← was: opt.rank (integer 0). Now: torch.device('cpu' or 'cuda:0')
-
+        
         self.load_model()
         self.load_weight(opt.ckpt_path, device=self.rank)
         self.G.to(self.rank)
@@ -175,9 +175,11 @@ class InferenceOptions(BaseOptions):
 
 if __name__ == '__main__':
     opt = InferenceOptions().parse()
-
+    opt.device = DEVICE
+    opt.rank = DEVICE
     # ── Device selection (was hardcoded: opt.rank, opt.ngpus = 0, 1) ──
-    opt.rank  = DEVICE
+    print(f"[FLOAT] opt.device = {opt.device}")
+    print(f"[FLOAT] opt.rank   = {opt.rank}")
     opt.ngpus = 1 if torch.cuda.is_available() else 0
 
     agent = InferenceAgent(opt)

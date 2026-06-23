@@ -197,8 +197,8 @@ class FlowMatchingTransformer(BaseModel):
 	"""
 	def __init__(self, opt) -> None:
 		super().__init__()
-		self.opt = opt
-		device = getattr(opt, "device", torch.device("cpu"))
+		self.device = getattr(opt, "device", torch.device("cpu"))
+
 		self.num_frames_for_clip = int(self.opt.wav2vec_sec * self.opt.fps)
 		self.num_prev_frames = int(opt.num_prev_frames)
 		self.num_total_frames = self.num_prev_frames + self.num_frames_for_clip
@@ -223,7 +223,7 @@ class FlowMatchingTransformer(BaseModel):
 		self.initialize_weights()		
 
 		# define alignment mask
-		alignment_mask = enc_dec_mask(self.num_total_frames, self.num_total_frames, 1, expansion=opt.attention_window).to(device)
+		alignment_mask = enc_dec_mask(self.num_total_frames, self.num_total_frames, 1, expansion=opt.attention_window).to(self.device)
 		self.register_buffer('alignment_mask', alignment_mask)
 
 

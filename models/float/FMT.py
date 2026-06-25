@@ -199,7 +199,7 @@ class FlowMatchingTransformer(BaseModel):
 	def __init__(self, opt) -> None:
 		super().__init__()
 		self.device = getattr(opt, "device", torch.device("cpu"))
-
+		self.opt = opt
 		self.num_frames_for_clip = int(self.opt.wav2vec_sec * self.opt.fps)
 		self.num_prev_frames = int(opt.num_prev_frames)
 		self.num_total_frames = self.num_prev_frames + self.num_frames_for_clip
